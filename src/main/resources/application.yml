@@ -1,0 +1,39 @@
+web:
+  upload-file-path: C:\Users\admin\Desktop\毕设\project\blog-file
+  upload-img-path: C:\Users\admin\Desktop\毕设\project\blog-img
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/hq_blog
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  elasticsearch:
+    uris: http://localhost:9200
+  mail:
+    host: smtp.qq.com
+    username: 2364521714@qq.com
+    password: nlflwhqzbdfbebhb
+    port: 587
+    default-encoding: utf-8
+    protocol: smtp
+  mvc:
+    static-path-pattern: /image/**
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  web:
+    resources:
+      static-locations: file:${web.upload-img-path}
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  #mapper映射文件路径
+  type-aliases-package: com.huanqiu.blog.domain.pojo        #配置哪个包下的类有默认的别名
+server:
+  port: 7777
+logging:
+  level:
+    com.huanqiu.blog.mapper: debug

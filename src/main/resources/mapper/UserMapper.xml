@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huanqiu.blog.mapper.UserMapper">
+    <select id="selectUserByEmail" resultType="integer">
+        select count(*)
+        from user
+        where email = #{email}
+    </select>
+
+    <insert id="insertUser" parameterType="com.huanqiu.blog.domain.pojo.InsertUserPo">
+        insert into user(`id`, `username`, `password`, `email`, `nick_name`)
+        values (#{userId}, #{username}, #{password}, #{email}, #{nickName})
+    </insert>
+
+    <select id="selectUserByAccount" resultType="com.huanqiu.blog.domain.pojo.SelectUserByAccountPo">
+        select `id`, `password`
+        from user
+        where username = #{account}
+           or email = #{account}
+    </select>
+
+</mapper>
