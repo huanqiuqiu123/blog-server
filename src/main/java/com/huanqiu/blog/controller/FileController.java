@@ -33,16 +33,21 @@ public class FileController {
     private String uploadImgPath;
 
     @PostMapping("/upload_img")
-    public ResponseResult uploadImg(@RequestParam("img") MultipartFile[] files) throws IOException {
+    public ResponseResult uploadImg(@RequestParam("img") MultipartFile[] files) {
         List<String> fileNames = new ArrayList<>();
-        for (MultipartFile file : files) {
-            String fileSuffix = "png";
-            if (StringUtils.hasText(file.getOriginalFilename())) {
-                fileSuffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        try {
+            for (MultipartFile file : files) {
+                String fileSuffix = "png";
+                if (StringUtils.hasText(file.getOriginalFilename())) {
+                    fileSuffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+                }
+                String fileName = new Date().getTime() + fileSuffix;
+                file.transferTo(new File(uploadImgPath, fileName));
+                fileNames.add(fileName);
             }
-            String fileName = new Date().getTime()+ fileSuffix;
-            file.transferTo(new File(uploadImgPath, fileName));
-            fileNames.add(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseResult(500, "服务器内部错误", null);
         }
         return new ResponseResult(200, "文件上传成功", Map.of("fileNames", fileNames));
     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanqiu.blog.mapper.ArticleMapper">
+    <select id="selectAllTags" resultType="com.huanqiu.blog.domain.pojo.TagPo">
+        select `id`,`name` from `tag`
+    </select>
+
+    <insert id="insertTag" parameterType="com.huanqiu.blog.domain.pojo.TagPo">
+        insert into `tag`(`id`, `name`) value (#{id}, #{name})
+    </insert>
+
+    <insert id="insertAuditArticle" parameterType="com.huanqiu.blog.domain.pojo.InsertAuditArticlePo">
+        insert into `blog`(`id`, `title`, `user_id`, `status`) value (#{id}, #{title}, #{userId}, #{status})
+    </insert>
+
+    <select id="getAuditArticle" resultType="com.huanqiu.blog.domain.pojo.InsertAuditArticlePo">
+        select `id`,`title`,`user_id`,`status` from `blog`
+    </select>
+
+</mapper>
