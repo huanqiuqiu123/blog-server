@@ -8,15 +8,16 @@ import lombok.NoArgsConstructor;
  * @author huanqiu
  * @version 1.0
  * @description
- * @date 2023/05/05 下午 5:29
+ * @date 2023/05/07 下午 3:02
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TagPo {
+public class InsertBlogPo {
 
-    String id;
-
-    String name;
+    private Long id;
+    private String title;
+    private Long userId;
+    private String status;
 
 }

@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer addUser(Long   userId, String password, String email) {
+    public Integer addUser(Long userId, String password, String email) {
         //生成默认用户名和昵称
         String username = "sy_" + String.valueOf(userId).substring(String.valueOf(userId).length() - 8);
         return userMapper.insertUser(new InsertUserPo(userId, username, password, email, username));

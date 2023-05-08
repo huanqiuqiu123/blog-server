@@ -17,4 +17,6 @@ public interface UserMapper {
     Integer insertUser(InsertUserPo insertUserPo);
 
     SelectUserByAccountPo selectUserByAccount(String account);
+
+    String selectUserNameById(String id);
 }

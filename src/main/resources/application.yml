@@ -31,9 +31,13 @@ spring:
       database: 0
 mybatis:
   mapper-locations: classpath:mapper/*.xml  #mapper映射文件路径
-  type-aliases-package: com.huanqiu.blog.domain.pojo        #配置哪个包下的类有默认的别名
 server:
   port: 7777
 logging:
   level:
     com.huanqiu.blog.mapper: debug
+
+rocketmq:
+  producer:
+    group: SY_GROUP
+  name-server: localhost:9876

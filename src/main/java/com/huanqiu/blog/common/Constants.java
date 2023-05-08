@@ -24,4 +24,9 @@ public class Constants {
         public static final String AUDIT = "审核";
         public static final String RETURN = "退回";
     }
+
+    public static final class ConsumerTopic{
+        public static final String ARTICLE_TOPIC = "article_topic";
+    }
+
 }

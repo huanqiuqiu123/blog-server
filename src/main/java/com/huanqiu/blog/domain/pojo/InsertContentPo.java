@@ -8,15 +8,12 @@ import lombok.NoArgsConstructor;
  * @author huanqiu
  * @version 1.0
  * @description
- * @date 2023/05/05 下午 5:29
+ * @date 2023/05/07 下午 3:09
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TagPo {
-
-    String id;
-
-    String name;
-
+public class InsertContentPo {
+    private Long id;
+    private String content;
 }

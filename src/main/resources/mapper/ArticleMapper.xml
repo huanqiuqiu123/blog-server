@@ -3,20 +3,76 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huanqiu.blog.mapper.ArticleMapper">
+    
+    <resultMap id="article" type="com.huanqiu.blog.domain.es.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="author" jdbcType="VARCHAR" javaType="String" column="author"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <collection property="tags" ofType="com.huanqiu.blog.domain.es.Tag">
+            <id property="id" column="tag_id"/>
+            <result property="name" column="tag_name"/>
+        </collection>
+    </resultMap>
+    
+    
+    
     <select id="selectAllTags" resultType="com.huanqiu.blog.domain.pojo.TagPo">
-        select `id`,`name` from `tag`
+        select `id`, `name`
+        from `tag`
     </select>
 
     <insert id="insertTag" parameterType="com.huanqiu.blog.domain.pojo.TagPo">
         insert into `tag`(`id`, `name`) value (#{id}, #{name})
     </insert>
 
-    <insert id="insertAuditArticle" parameterType="com.huanqiu.blog.domain.pojo.InsertAuditArticlePo">
-        insert into `blog`(`id`, `title`, `user_id`, `status`) value (#{id}, #{title}, #{userId}, #{status})
+    <insert id="insertTemporaryBlog" parameterType="com.huanqiu.blog.domain.pojo.InsertBlogPo">
+        insert into `blog`(`id`, `user_id`, `title`, `status`)
+            value (#{id}, #{userId}, #{title}, #{status})
     </insert>
 
-    <select id="getAuditArticle" resultType="com.huanqiu.blog.domain.pojo.InsertAuditArticlePo">
-        select `id`,`title`,`user_id`,`status` from `blog`
+    <insert id="insertContent" parameterType="com.huanqiu.blog.domain.pojo.InsertContentPo">
+        insert into `article`(`id`, `content`)
+            value (#{id},#{content})
+        on duplicate key update `content` = #{content}
+    </insert>
+
+    <insert id="insertPublishBlog" parameterType="com.huanqiu.blog.domain.pojo.InsertBlogPo">
+        insert into `blog`(`id`, `title`, `user_id`, `status`)
+            value (#{id}, #{title}, #{userId}, #{status})
+         on duplicate key update `title` = #{title}, `status` = #{status}
+    </insert>
+
+    <insert id="insertBlogTag" parameterType="com.huanqiu.blog.domain.pojo.InsertBlogTagPo">
+        insert into `blog_tag`(`id`,`blog_id`, `tag_id`)
+            value (#{id},#{blogId}, #{tagId})
+    </insert>
+
+    <delete id="deleteTagByBlogId">
+        delete from `blog_tag` where `blog_id` = #{blogId}
+    </delete>
+
+    <select id="selectBlogInfoById" resultMap="article">
+        select blog.id as id,
+               blog.title as title,
+               article.content as content,
+               tag.id as tag_id,
+               tag.name as tag_name,
+               user.nick_name as author,
+               blog.create_time as create_time,
+               blog.update_time as update_time
+        from `blog`,
+             `article`,
+             `blog_tag`,
+             `tag`,
+             `user`
+        where blog.id = article.id
+          and blog.id = blog_tag.blog_id
+          and blog_tag.tag_id = tag.id
+          and blog.user_id = user.id
+          and blog.id = #{blogId};
     </select>
 
 </mapper>

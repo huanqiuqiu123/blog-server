@@ -34,15 +34,10 @@ public class JwtUtil {
 
     /**
      * @param map token内部存储的字段
-     * @return token
+     * @return token 默认7天过期
      */
     public static String getToken(Map<String, String> map) {
-        Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.SECOND, EXPIRED_TIME);
-        JWTCreator.Builder builder = JWT.create();
-        map.forEach(builder::withClaim);
-        return builder.withExpiresAt(instance.getTime())  //指定令牌过期时间
-                .sign(Algorithm.HMAC256(SIGN));
+        return getToken(map, EXPIRED_TIME);
     }
 
     /**

@@ -1,10 +1,9 @@
 package com.huanqiu.blog;
 
-import com.huanqiu.blog.domain.pojo.InsertAuditArticlePo;
+import com.huanqiu.blog.domain.es.Article;
 import com.huanqiu.blog.domain.pojo.TagPo;
 import com.huanqiu.blog.mapper.ArticleMapper;
 import com.huanqiu.blog.service.ArticleService;
-import com.huanqiu.blog.util.SnowFlakeUtil;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +21,9 @@ public class ArticleTest {
     @Resource
     private ArticleService articleService;
 
+    @Resource
+    private ArticleMapper articleMapper;
+
     @Test
     void testAddTag() {
         articleService.addTag("java");
@@ -36,19 +38,18 @@ public class ArticleTest {
     void testGetAllTags() {
         List<TagPo> allTags = articleService.getAllTags();
         allTags.forEach(System.out::println);
+
     }
 
     @Test
-    void testInsertAuditArticle() {
-        InsertAuditArticlePo insertAuditArticlePo=new InsertAuditArticlePo(SnowFlakeUtil.getNextId(),"java开发",851154538214719488L,"审核");
-        articleService.addAuditArticle(insertAuditArticlePo);
+    void testAddTemporaryBlog() {
+        articleService.saveBlog(851154538214719488L,null,"测试","测试内容");
     }
 
-    @Resource
-    private ArticleMapper articleMapper;
     @Test
-    void testSelectAuditArticle(){
-        articleMapper.getAuditArticle().forEach(System.out::println);
+    void testSelectBlogInfo(){
+        Article article = articleMapper.selectBlogInfoById("852989424080781312");
+        System.out.println(article);
     }
 
 }

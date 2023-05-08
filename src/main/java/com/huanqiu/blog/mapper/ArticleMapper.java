@@ -1,6 +1,9 @@
 package com.huanqiu.blog.mapper;
 
-import com.huanqiu.blog.domain.pojo.InsertAuditArticlePo;
+import com.huanqiu.blog.domain.es.Article;
+import com.huanqiu.blog.domain.pojo.InsertBlogTagPo;
+import com.huanqiu.blog.domain.pojo.InsertContentPo;
+import com.huanqiu.blog.domain.pojo.InsertBlogPo;
 import com.huanqiu.blog.domain.pojo.TagPo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,10 +22,15 @@ public interface ArticleMapper {
 
     void insertTag(TagPo tagPo);
 
-    void insertAuditArticle(InsertAuditArticlePo insertAuditArticlePo);
+    void insertTemporaryBlog(InsertBlogPo insertBlogPo);
 
-    List<InsertAuditArticlePo> getAuditArticle();
+    void insertContent(InsertContentPo insertContentPo);
 
+    void insertBlog(InsertBlogPo insertBlogPo);
 
+    void insertBlogTag(InsertBlogTagPo insertBlogTagPo);
 
+    void deleteTagByBlogId(String blogId);
+
+    Article selectBlogInfoById(String blogId);
 }

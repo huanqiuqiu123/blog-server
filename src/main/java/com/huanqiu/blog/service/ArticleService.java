@@ -1,6 +1,7 @@
 package com.huanqiu.blog.service;
 
-import com.huanqiu.blog.domain.pojo.InsertAuditArticlePo;
+import com.huanqiu.blog.domain.dto.PublishArticleDto;
+import com.huanqiu.blog.domain.dto.SaveArticleDto;
 import com.huanqiu.blog.domain.pojo.TagPo;
 
 import java.util.List;
@@ -19,6 +20,9 @@ public interface ArticleService {
 
     void addTagList(List<String> nameList);
 
-    void addAuditArticle(InsertAuditArticlePo insertAuditArticlePo);
+    void saveBlog(Long userId, Long articleId, String title, String content);
 
+    void publishArticle(PublishArticleDto publishArticleDto,Long userId);
+
+    void saveArticle(SaveArticleDto saveArticleDto,String userId);
 }

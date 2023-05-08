@@ -9,7 +9,7 @@
 
     <insert id="insertUser" parameterType="com.huanqiu.blog.domain.pojo.InsertUserPo">
         insert into user(`id`, `username`, `password`, `email`, `nick_name`)
-        values (#{userId}, #{username}, #{password}, #{email}, #{nickName})
+            value (#{userId}, #{username}, #{password}, #{email}, #{nickName})
     </insert>
 
     <select id="selectUserByAccount" resultType="com.huanqiu.blog.domain.pojo.SelectUserByAccountPo">
@@ -18,5 +18,13 @@
         where username = #{account}
            or email = #{account}
     </select>
+
+    <select id="selectUserNameById">
+        select `username`
+        from user
+        where id = #{id}
+    </select>
+
+
 
 </mapper>
